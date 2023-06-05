@@ -39,12 +39,6 @@ cards = cards_without_un
 
 
 
-
-
-
-
-
-
 ##
 # quality check 2: missing information
 ## 
@@ -58,12 +52,8 @@ missing_values
 
 
 
-
-
-
-
 ##
-# quality check 4: colors column is a list 
+# quality check 3: colors column is a list 
 ## 
 
 # the colors column is a listed with the pandas dataframe - for string capturing need to 
@@ -72,12 +62,8 @@ cards['colors'] = cards['colors'].apply(lambda x: ', '.join(map(str, x)) if x is
 
 
 
-
-
-
-
 ##
-# quality check 3: upper-cases on string 
+# quality check 4: upper-cases on string 
 ##
 
 # a good portion of strings have some upper-case and some lower case values which can be problematic in captures 
@@ -86,10 +72,13 @@ cards = cards.applymap(lambda x: x.lower() if isinstance(x, str) else x)
 
 
 
+##
+# quality check 5: type conversions 
+## 
 
-
-
-
+# convert release date to date type and pulling a year column 
+cards['released_at'] = pd.to_datetime(cards['released_at'])
+cards['year'] = cards['released_at'].dt.year
 
 
 ##

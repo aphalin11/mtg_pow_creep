@@ -5,7 +5,6 @@ Summarizing the data by set for exploration of several metrics over time.
 
 import pandas as pd 
 import seaborn as sns 
-import numpy as np 
 from matplotlib import pyplot as plt 
 
 
@@ -107,17 +106,70 @@ sns.set_style("dark", {'axes.grid' : False})
 
 ticks = plt.gca().get_xticks()
 first_date = min(set_agg['release_date'])
-date_quart = np.quantile(set_agg['release_date'], 0.25)
 last_date = max(set_agg['release_date'])
 plt.gca().set_xticks([ticks[0], ticks[-1]])
 plt.gca().set_xticklabels([first_date, last_date])
 
 plt.xlabel('Set Release Date')
 plt.ylabel('Total Cards Printed')
+plt.ylim(0, 400)
 plt.title('Cards Printed by Set Date')
 plt.xticks(rotation = 45)
+plt.show() 
 
 
+
+
+##
+# aggregating to a year-level 
+##
+
+year_agg = cards.groupby('year').agg(
+    total_cards = ('name', 'nunique'), 
+    total_non_reprints = ('reprint', total_non_reprints), 
+    total_non_lands = ('nonland_spell', total_non_land),
+    average_nonland_cmc = ('cmc', 'mean'),  # need logic to define non-land 
+    highest_nonland_cmc = ('cmc', max), 
+    total_creatures = ('creature', sum), 
+    total_enchantments = ('enchantment', sum), 
+    total_artifacts = ('artifact', sum), 
+    total_instant_sorceries = ('instant_sorcery', sum), 
+    total_planeswalkers = ('planeswalkers', sum), 
+    total_foils = ('foil', sum), # total count of cards with foil prints
+    total_white = ('white', sum), 
+    total_blue = ('blue', sum), 
+    total_black = ('black', sum), 
+    total_red = ('red', sum), 
+    total_green = ('green', sum), 
+    average_edhrec_legendaries = ('edhrec_rank', 'mean'), 
+    highest_edhrec_legendaries = ('edhrec_rank', max), 
+    lowest_edhrec_legendaries = ('edhrec_rank', min)  
+)
+
+
+
+
+
+##
+#  card prints by year 
+##
+
+sns.lineplot(data = year_agg, x = 'year', y = 'total_cards')
+sns.set_style("dark", {'axes.grid' : False})
+plt.xlabel('Set Year')
+plt.ylabel('Total Cards Printed')
+plt.title('Cards Printed by Set Date')
+plt.xticks(rotation = 45)
+plt.show() 
+
+
+sns.lineplot(data = year_agg, x = 'year', y = 'total_non_reprints')
+sns.set_style("dark", {'axes.grid' : False})
+plt.xlabel('Set Year')
+plt.ylabel('Total Cards Printed')
+plt.title('Cards Printed by Set Date')
+plt.xticks(rotation = 45)
+plt.show() 
 
 
 
