@@ -1,4 +1,4 @@
-# "Power Creep Analysis"
+# Power Creep Analysis
 ## An analysis on Magic the Gathering! with concentration on quantifying 'power creep' in more recent sets. 
 
 The goal of this analysis is the quantify power creep and otherwise summarize trends in WotC's publishing of magic cards in each new set. It is a commonly hashed fact that magic, and our favorite format, commander, has been scaling up in "power level".
