@@ -1,0 +1,6 @@
+This folder contains the python scripts for this analysis. 
+
+Files: 
+- data_pull.py: script to pull the card information from Scryfall's API. output: cards.feather in Data folder. 
+- data_cleaning.py: all large table feature creations and processings, including string formatting and important post-data pull filters. output: cards_cleaned.feather in Data folder. 
+- set_level_agg.py: analysis conducted by grouping and summarizing by set and release data for a time series style exploratory analysis. 
