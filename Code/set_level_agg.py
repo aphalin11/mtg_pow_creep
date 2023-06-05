@@ -5,7 +5,12 @@ Summarizing the data by set for exploration of several metrics over time.
 
 import pandas as pd 
 import seaborn as sns 
-import matplotlib as plt 
+import numpy as np 
+from matplotlib import pyplot as plt 
+
+
+# enable show all columns for data check 
+pd.set_option('display.max_columns', None)
 
 
 # pulling card data 
@@ -76,7 +81,41 @@ set_agg = cards.groupby('set').agg(
 set_agg.sort_values(by = 'release_date').head(10)
 
 
+# secondary aggregation step to calculate % of totals 
+set_agg
+set_agg[['percent_creatures', 'percent_foils',
+         'percent_white', 'percent_blue', 'percent_black', 
+         'percent_green', 'percent_red']] =   [(set_agg['total_creatures'] / set_agg['total_cards']) * 100, 
+     (set_agg['total_foils'] / set_agg['total_cards']) * 100, 
+     (set_agg['total_white'] / set_agg['total_cards']) * 100, 
+     (set_agg['total_blue'] / set_agg['total_cards']) * 100, 
+     (set_agg['total_green'] / set_agg['total_cards']) * 100, 
+     (set_agg['total_red'] / set_agg['total_cards']) * 100]
 
+
+
+
+## 
+# visualizing total cards by set and release date 
+## 
+
+set_agg.info()
+set_agg.head(2)
+
+sns.lineplot(data = set_agg, x = 'release_date', y = 'total_cards')
+sns.set_style("dark", {'axes.grid' : False})
+
+ticks = plt.gca().get_xticks()
+first_date = min(set_agg['release_date'])
+date_quart = np.quantile(set_agg['release_date'], 0.25)
+last_date = max(set_agg['release_date'])
+plt.gca().set_xticks([ticks[0], ticks[-1]])
+plt.gca().set_xticklabels([first_date, last_date])
+
+plt.xlabel('Set Release Date')
+plt.ylabel('Total Cards Printed')
+plt.title('Cards Printed by Set Date')
+plt.xticks(rotation = 45)
 
 
 
