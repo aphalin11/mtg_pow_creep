@@ -8,7 +8,6 @@ Output: All Magic! The Gathering Cards pulled from Scryfall's API, stored as car
 
 import requests
 import pandas as pd 
-import os
       
 
 # url used for API - a general search parameter to capture all cards (CMC >= 0) is used        
@@ -50,7 +49,7 @@ only_good_stuff = df[['id', 'name', 'released_at', 'mana_cost', 'cmc',
                       'edhrec_rank', 'legalities.commander', 'loyalty']]
     
 # writing dataframe into a feather file for storage 
-only_good_stuff.to_feather('cards.feather')
+only_good_stuff.to_feather('Data/cards.feather')
 
 
 
